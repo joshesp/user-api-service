@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig to read more about this file */
+    
+    /* Language and Environment */
+    "target": "es2016",
+    "experimentalDecorators": true, 
+    "emitDecoratorMetadata": true,
+
+    /* Modules */
+    "module": "commonjs", 
+    "rootDir": "./", 
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    // "paths": {}, 
+    // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
+    // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
+    // "resolveJsonModule": true,                        /* Enable importing .json files. */
+
+    /* Emit */
+    "outDir": "./dist",
+    "removeComments": true,
+
+    /* Interop Constraints */
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking */
+    "strict": true,
+
+    /* Completeness */
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules"],
+	"include": ["src/**/*"]
+}
