@@ -1,10 +1,13 @@
 import cors from 'cors';
 import express, { Application } from 'express';
-import routesService from './controllers';
+import { CONTEXT_API } from './config/constanst';
+import errorMiddleware from './middlewares/errorMiddleware';
+import userRoutes from './routes/userRoutes';
 
 class Server {
     private app: Application;
     private port: string;
+    private context = `${CONTEXT_API}/v1`;
 
     constructor(port: string) {
         this.app = express();
@@ -16,7 +19,10 @@ class Server {
     private configurations(): void {
         this.app.use(cors());
         this.app.use(express.json());
-        this.app.use(routesService);
+
+        this.app.use(this.context, userRoutes);
+
+        this.app.use(errorMiddleware);
     }
 
     listen(): void {
