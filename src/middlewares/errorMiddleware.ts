@@ -1,7 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import AppError from '../core/errors/AppError';
+import Logger from '../utils/Logger';
 
 const errorMiddleware = (error: Error, _: Request, res: Response, __: NextFunction): void => {
+    Logger.error(`Error: ${error.message}`);
+
     if (error instanceof AppError) {
         res.status(error.statusCode).json({
             status: 'error',
