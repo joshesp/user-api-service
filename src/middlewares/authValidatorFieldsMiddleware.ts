@@ -15,6 +15,10 @@ export const userAccessFieldsRequired = [
     check('password').notEmpty().isLength({ min: 6 }).trim().escape(),
 ];
 
+export const userRefreshTokenFieldsRequired = [
+    check('refreshToken').notEmpty().trim().escape(),
+];
+
 export const authValidatorFieldsMiddleware = (
     req: Request, _: Response, next: NextFunction
 ) => {

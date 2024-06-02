@@ -2,7 +2,7 @@
 import AppError from "../core/errors/AppError";
 import { IUserAuthData } from "../core/interfaces/IUserData";
 import UserRepository from "../repositories/UserRepository";
-import { generateToken } from "../utils/jwt";
+import { generateToken, verifyToken } from "../utils/jwt";
 
 class AuthService {
     private userRepository: UserRepository;
@@ -13,7 +13,7 @@ class AuthService {
 
     public async authenticate(
         { email, password }: IUserAuthData
-    ): Promise<{ token: string }> {
+    ): Promise<{ token: string, refreshToken: string }> {
         try {
             const user = await this.userRepository.findByEmail(email);
 
@@ -27,13 +27,27 @@ class AuthService {
                 throw new AppError('Invalid password.', 401);
             }
 
-            const token = generateToken({ id: user.id, email: user.email });
+            const payloadJwt = { id: user.id, email: user.email };
+            const token = generateToken(payloadJwt);
+            const refreshToken = generateToken(payloadJwt, true);
 
-            return { token };
+            return { token, refreshToken };
         } catch (error) {
             throw error;
         }
     };
+
+    public async refreshAccessToken(token: string): Promise<{ token: string, refreshToken: string }> {
+        try {
+            const decoded = verifyToken(token, true);
+            const newToken = generateToken(decoded);
+            const refreshToken = generateToken(decoded, true);
+
+            return { token: newToken, refreshToken };
+        } catch (error) {
+            throw new AppError('Invalid refresh token', 401);
+        }
+    }
 }
 
 export default new AuthService();

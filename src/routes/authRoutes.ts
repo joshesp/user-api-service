@@ -3,7 +3,8 @@ import AuthController from '../controllers/AuthController';
 import {
     authValidatorFieldsMiddleware,
     userAccessFieldsRequired,
-    userNewFieldsRequired
+    userNewFieldsRequired,
+    userRefreshTokenFieldsRequired
 } from '../middlewares/authValidatorFieldsMiddleware';
 
 const router = Router();
@@ -18,6 +19,12 @@ router.post(
     '/register',
     [...userNewFieldsRequired, authValidatorFieldsMiddleware],
     AuthController.register
+);
+
+router.post(
+    '/refresh-token',
+    [...userRefreshTokenFieldsRequired, authValidatorFieldsMiddleware],
+    AuthController.refeshToken
 );
 
 export default router;
