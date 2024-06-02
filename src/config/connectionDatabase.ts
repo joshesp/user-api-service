@@ -2,7 +2,9 @@
 import "reflect-metadata";
 import { DataSource } from 'typeorm';
 import { User } from "../entity/User";
-import { IS_PRODUCTION, POSTGRES_CONNECTION, POSTGRES_CONNECTION_TIMEOUT } from './env';
+import {
+  IS_PRODUCTION, POSTGRES_CONNECTION, POSTGRES_CONNECTION_TIMEOUT
+} from './env';
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -15,4 +17,4 @@ export const AppDataSource = new DataSource({
   entities: [User],
   migrations: ['src/migrations/*.ts'],
   subscribers: [],
-})
+});
