@@ -11,7 +11,7 @@ export const userFieldsRequired = [
 ];
 
 
-export const userDataPostMiddleware = (
+export const userDataCreateMiddleware = (
     req: Request, _: Response, next: NextFunction
 ) => {
     const errors = validationResult(req)
