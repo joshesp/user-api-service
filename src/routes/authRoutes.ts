@@ -1,17 +1,22 @@
 import { Router } from 'express';
 import AuthController from '../controllers/AuthController';
-import { userDataCreateMiddleware, userFieldsRequired } from '../middlewares/userDataPostMiddleware';
+import {
+    authValidatorFieldsMiddleware,
+    userAccessFieldsRequired,
+    userNewFieldsRequired
+} from '../middlewares/authValidatorFieldsMiddleware';
 
 const router = Router();
 
 router.post(
-    '/register',
-    [...userFieldsRequired, userDataCreateMiddleware],
-    AuthController.register
+    '/login',
+    [...userAccessFieldsRequired, authValidatorFieldsMiddleware],
+    AuthController.login
 );
+
 router.post(
     '/register',
-    [...userFieldsRequired, userDataCreateMiddleware],
+    [...userNewFieldsRequired, authValidatorFieldsMiddleware],
     AuthController.register
 );
 

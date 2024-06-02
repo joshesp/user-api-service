@@ -1,6 +1,6 @@
 
 import AppError from "../core/errors/AppError";
-import { IUserData } from "../core/interfaces/IUserData";
+import { IUserAuthData } from "../core/interfaces/IUserData";
 import UserRepository from "../repositories/UserRepository";
 import { generateToken } from "../utils/jwt";
 
@@ -12,7 +12,7 @@ class AuthService {
     }
 
     public async authenticate(
-        { email, password }: IUserData
+        { email, password }: IUserAuthData
     ): Promise<{ token: string }> {
         try {
             const user = await this.userRepository.findByEmail(email);
