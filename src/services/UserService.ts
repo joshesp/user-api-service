@@ -1,6 +1,6 @@
 
 import AppError from "../core/errors/AppError";
-import { User } from "../entity/User";
+import { IUserData } from "../core/interfaces/IUserData";
 import UserRepository from "../repositories/UserRepository";
 
 class UserService {
@@ -10,7 +10,7 @@ class UserService {
         this.userRepository = new UserRepository();
     }
 
-    public async create(user: { [key: string]: string }): Promise<User> {
+    public async create(user: IUserData): Promise<number> {
         try {
             const userExist = await this.userRepository.findByEmail(user.email);
 
@@ -18,7 +18,9 @@ class UserService {
                 throw new AppError('User with this email already exists', 400);
             }
 
-            return await this.userRepository.createUser(user);
+            const newUser = await this.userRepository.createUser(user);
+
+            return newUser.id;
         } catch (error) {
             throw error;
         }

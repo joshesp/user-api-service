@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../config/connectionDatabase";
+import { IUserData } from "../core/interfaces/IUserData";
 import { User } from "../entity/User";
 
 class UserRepository {
@@ -13,7 +14,7 @@ class UserRepository {
         return this.repository.findOneBy({ email: email });
     }
 
-    public createUser(user: { [key: string]: string }): Promise<User> {
+    public createUser(user: IUserData): Promise<User> {
         const newUser = new User();
 
         newUser.name = user.name;
