@@ -2,6 +2,7 @@ import cors from 'cors';
 import express, { Application } from 'express';
 import { CONTEXT_API } from './config/constanst';
 import errorMiddleware from './middlewares/errorMiddleware';
+import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
 
 class Server {
@@ -20,7 +21,8 @@ class Server {
         this.app.use(cors());
         this.app.use(express.json());
 
-        this.app.use(this.context, userRoutes);
+        this.app.use(`${this.context}/users`, userRoutes);
+        this.app.use(`${this.context}/auth`, authRoutes);
 
         this.app.use(errorMiddleware);
     }
