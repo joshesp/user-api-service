@@ -12,22 +12,41 @@ export class User {
     @Column({ length: "50", comment: "Apellido del usuario" })
     lastname!: string;
 
-    @Column({ length: "50", unique: true, comment: "Correo electrónico del usuario" })
+    @Column({
+        length: "50", unique: true, comment: "Correo electrónico del usuario"
+    })
     email!: string;
 
     @Column({ comment: "Contraseña del usuario" })
     password!: string;
 
-    @Column({ name: "account_blocked", default: false, comment: "Indica si el usuario está bloqueado(temporalmente o permanentemente)" })
+    @Column({
+        name: "account_blocked",
+        default: false,
+        comment: "Indica si el usuario está bloqueado(temporalmente o permanentemente)"
+    })
     isAccountBlocked!: boolean;
 
-    @CreateDateColumn({ name: "created_at", comment: "Fecha de creación del usuario" })
+    @Column({
+        name: "last_login",
+        comment: "Fecha de última conexión del usuario",
+        nullable: true
+    })
+    lastLogin!: Date;
+
+    @CreateDateColumn({
+        name: "created_at", comment: "Fecha de creación del usuario"
+    })
     createdAt!: Date;
 
-    @UpdateDateColumn({ name: "updated_at", comment: "Fecha de actualización del usuario" })
+    @UpdateDateColumn({
+        name: "updated_at", comment: "Fecha de actualización del usuario"
+    })
     updatedAt!: Date;
 
-    @DeleteDateColumn({ name: "deleted_at", comment: "Fecha de eliminación del usuario" })
+    @DeleteDateColumn({
+        name: "deleted_at", comment: "Fecha de eliminación del usuario"
+    })
     deletedAt!: Date;
 
     @BeforeInsert()
