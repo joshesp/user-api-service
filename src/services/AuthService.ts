@@ -21,6 +21,14 @@ class AuthService {
                 throw new AppError('User not found.', 401);
             }
 
+            if (user.requestPasswordReset) {
+                throw new AppError('User request password reset.', 401);
+            }
+
+            if (!user.isAccountBlocked) {
+                throw new AppError('User is not active.', 401);
+            }
+
             const isValidPassword = await user.validatePassword(password);
 
             if (!isValidPassword) {
@@ -46,6 +54,29 @@ class AuthService {
             return { token: newToken, refreshToken };
         } catch (error) {
             throw new AppError('Invalid refresh token', 401);
+        }
+    }
+
+    /**
+     * resetPasswordUser
+     */
+    public async resetPasswordUser(email: string): Promise<void> {
+        try {
+            const user = await this.userRepository.findByEmail(email);
+
+            if (!user) {
+                throw new AppError('User not found.', 401);
+            }
+
+            if (user.requestPasswordReset) {
+                // TODO: Invalidate code/token 
+            }
+
+            await this.userRepository.setRequestPasswordReset(user, true);
+
+            // TODO: Send email/sms to user
+        } catch (error) {
+            throw error;
         }
     }
 }

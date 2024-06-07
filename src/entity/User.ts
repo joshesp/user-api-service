@@ -28,6 +28,13 @@ export class User {
     isAccountBlocked!: boolean;
 
     @Column({
+        name: "request_password_reset",
+        default: false,
+        comment: "Indica si el usuario solicitó una restablecimiento de contraseña"
+    })
+    requestPasswordReset!: boolean;
+
+    @Column({
         name: "last_login",
         comment: "Fecha de última conexión del usuario",
         nullable: true

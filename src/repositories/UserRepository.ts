@@ -24,6 +24,12 @@ class UserRepository {
 
         return this.repository.save(newUser);
     }
+
+    public setRequestPasswordReset(user: User, requestPasswordReset: boolean): Promise<User> {
+        user.requestPasswordReset = requestPasswordReset;
+
+        return this.repository.save(user);
+    }
 }
 
 export default UserRepository;
