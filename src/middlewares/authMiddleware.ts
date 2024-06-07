@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import AppError from '../core/errors/AppError';
 import { verifyToken } from '../utils/jwt';
 
-const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+const authMiddleware = (req: Request, _: Response, next: NextFunction): void => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {

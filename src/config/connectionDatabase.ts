@@ -16,5 +16,4 @@ export const AppDataSource = new DataSource({
   logNotifications: !IS_PRODUCTION,
   entities: [User],
   migrations: ['src/migrations/*.ts'],
-  subscribers: [],
 });
