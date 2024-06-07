@@ -1,34 +1,20 @@
 {
   "compilerOptions": {
-    /* Visit https://aka.ms/tsconfig to read more about this file */
-
-    /* Language and Environment */
     "target": "es2016",
+    "module": "commonjs",
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-
-    /* Modules */
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "baseUrl": "./",
-    "resolveJsonModule": true,
-    // "paths": {},
-    // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
-    // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
-
-    /* Emit */
-    "outDir": "./dist",
     "removeComments": true,
-
-    /* Interop Constraints */
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-
-    /* Type Checking */
     "strict": true,
-
-    /* Completeness */
     "skipLibCheck": true
+  },
+  "ts-node": {
+    "files": true
   },
   "exclude": ["node_modules"],
   "include": ["src/**/*"]
