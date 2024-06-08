@@ -19,10 +19,16 @@ class PasswordResetRepository {
     }
 
     public findByUser(userId: number): Promise<PasswordReset | null> {
-        return this.repository.findOneBy({ userId });
+        console.log('::::::findByUser', userId);
+        return this.repository.findOne({ where: { userId } })
+    }
+
+    public findByToken(token: string): Promise<PasswordReset | null> {
+        return this.repository.findOneBy({ token });
     }
 
     public deleteByUser(userId: number): Promise<unknown> {
+        console.log('::::::deleteByUser', userId);
         return this.repository.delete({ userId });
     }
 

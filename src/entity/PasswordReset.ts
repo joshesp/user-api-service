@@ -1,13 +1,11 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "./User";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class PasswordReset {
     @PrimaryGeneratedColumn()
     id!: number
 
-    @OneToOne(() => User)
-    @JoinColumn({ name: "user_id" })
+    @Column({ name: "user_id" })
     userId!: number
 
     @Column({ comment: "Identificador unico para validar el reset del password" })

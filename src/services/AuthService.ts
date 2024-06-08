@@ -33,11 +33,11 @@ class AuthService {
     ): Promise<{ token: string, refreshToken: string }> {
         try {
             const user = await this.userRepository.findByEmail(email);
-
+            console.log('::authenticate-user', user)
             this.verifyUserStatus(user);
 
             const requestPasswordReset = await this.passwordResetProv.findByUser(user!.id);
-
+            console.log('::authenticate-requestPasswordReset', requestPasswordReset);
             if (requestPasswordReset) {
                 throw new AppError('User request password reset.', 401);
             }
@@ -86,6 +86,37 @@ class AuthService {
             await this.passwordResetProv.create(user!.id, token);
 
             // TODO: Send link or code (email/sms) to user
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async resetPassword(token: string, password: string): Promise<void> {
+        try {
+
+            console.log('token:::::', token);
+            const tokenData = await this.passwordResetProv.findByToken(token);
+
+            if (!tokenData) {
+                throw new AppError('Invalid token.', 401);
+            }
+            console.log('::::resetPassword', tokenData);
+            const timeDifferenceInMinutes = Math.round((Date.now() - tokenData.createdAt.getTime()) / (1000 * 60));
+
+            if (timeDifferenceInMinutes > 20) {
+                throw new AppError('Token has expired.', 401);
+            }
+
+            const user = await this.userRepository.findById(tokenData.userId);
+            console.log('::::resetPassword', user)
+            if (!user) {
+                throw new AppError('User not found.', 401);
+            }
+
+            user.password = password;
+
+            await this.userRepository.updateUser(user);
+            await this.passwordResetProv.deleteByUser(user.id);
         } catch (error) {
             throw error;
         }

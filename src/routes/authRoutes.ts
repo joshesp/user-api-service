@@ -4,6 +4,7 @@ import {
     authValidatorFieldsMiddleware,
     userAccessFieldsRequired,
     userNewFieldsRequired,
+    userPasswordResetFieldsRequired,
     userRefreshTokenFieldsRequired,
     userRquestPasswordResetFieldsRequired
 } from '../middlewares/authValidatorFieldsMiddleware';
@@ -34,5 +35,10 @@ router.post(
     AuthController.requestPasswordReset
 );
 
+router.post(
+    '/update-password',
+    [...userPasswordResetFieldsRequired, authValidatorFieldsMiddleware],
+    AuthController.updatePassword
+);
 
 export default router;

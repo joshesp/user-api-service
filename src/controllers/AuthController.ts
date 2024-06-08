@@ -63,12 +63,18 @@ class AuthController implements IAuthController {
         }
     }
 
-    async resetPassword(
+    async updatePassword(
         req: Request,
         res: Response<any, Record<string, any>>,
         next: NextFunction
     ): Promise<void> {
-        throw new Error("Method not implemented.");
+        try {
+            const { password, token } = req.body;
+            await AuthService.resetPassword(token, password);
+            res.status(200).json({ message: 'Password reset successfully' });
+        } catch (error) {
+            next(error);
+        }
     }
 }
 

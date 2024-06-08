@@ -28,6 +28,13 @@ class UserRepository {
 
         return this.repository.save(newUser);
     }
+
+    public updateUser(user: User): Promise<User> {
+        console.log('::::::updateUser', user);
+        return this.repository.save(user);
+    }
+
+
 }
 
 export default UserRepository;
