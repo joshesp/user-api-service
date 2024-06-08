@@ -4,6 +4,7 @@ import { CONTEXT_API } from './config/constanst';
 import errorMiddleware from './middlewares/errorMiddleware';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
+import Logger from './utils/Logger';
 
 class Server {
     private app: Application;
@@ -29,7 +30,7 @@ class Server {
 
     listen(): void {
         this.app.listen(this.port, () => {
-            console.log(`Server is running on port: ${this.port}`);
+            Logger.info(`Server is running on port: ${this.port}`);
         })
     }
 }

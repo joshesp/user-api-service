@@ -14,8 +14,6 @@ const errorMiddleware = (
             ...(process.env.NODE_ENV === 'development' && { stack: error.stack }),
         });
     } else {
-        console.error(error);
-
         res.status(500).json({
             status: 'error',
             message: 'Internal Server Error',
