@@ -1,6 +1,7 @@
 
 import "reflect-metadata";
 import { DataSource } from 'typeorm';
+import { PasswordReset } from "../entity/PasswordReset";
 import { User } from "../entity/User";
 import {
   IS_PRODUCTION, POSTGRES_CONNECTION, POSTGRES_CONNECTION_TIMEOUT
@@ -14,6 +15,6 @@ export const AppDataSource = new DataSource({
   logger: IS_PRODUCTION ? undefined : 'debug',
   connectTimeoutMS: +POSTGRES_CONNECTION_TIMEOUT,
   logNotifications: !IS_PRODUCTION,
-  entities: [User],
+  entities: [User, PasswordReset],
   migrations: ['src/migrations/*.ts'],
 });
