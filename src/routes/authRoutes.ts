@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import AuthController from '../controllers/AuthController';
-import authMiddleware from '../middlewares/authMiddleware';
 import {
     authValidatorFieldsMiddleware,
     userAccessFieldsRequired,
     userNewFieldsRequired,
-    userRefreshTokenFieldsRequired
+    userRefreshTokenFieldsRequired,
+    userRquestPasswordResetFieldsRequired
 } from '../middlewares/authValidatorFieldsMiddleware';
 
 const router = Router();
@@ -28,10 +28,11 @@ router.post(
     AuthController.refeshToken
 );
 
-router.get(
+router.post(
     '/request-password-reset',
-    [authMiddleware],
+    [...userRquestPasswordResetFieldsRequired, authValidatorFieldsMiddleware],
     AuthController.requestPasswordReset
 );
+
 
 export default router;

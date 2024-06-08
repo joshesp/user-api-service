@@ -55,8 +55,8 @@ class AuthController implements IAuthController {
         next: NextFunction
     ): Promise<void> {
         try {
-            const { email } = req.user;
-            await AuthService.resetPasswordUser(email);
+            const { email } = req.body;
+            await AuthService.requestPasswordResetUser(email);
             res.status(200).json({ message: 'Password reset successfully' });
         } catch (error) {
             next(error);

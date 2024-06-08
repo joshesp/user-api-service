@@ -12,11 +12,23 @@ export const userNewFieldsRequired = [
 
 export const userAccessFieldsRequired = [
     check('email').isEmail().isLength({ max: 50 }).normalizeEmail(),
-    check('password').notEmpty().isLength({ min: 6 }).trim().escape(),
+    check('password').notEmpty().isLength({ min: 6 }).trim().escape()
 ];
 
 export const userRefreshTokenFieldsRequired = [
     check('refreshToken').notEmpty().trim().escape(),
+];
+
+export const userRquestPasswordResetFieldsRequired = [
+    check('email').notEmpty().trim().escape(),
+];
+
+export const userPasswordResetFieldsRequired = [
+    check('password').notEmpty().trim().escape(),
+    check('passwordConfirmation').notEmpty().isLength({ min: 6 }).trim().escape().custom(
+        (value, { req }) => (value === req.body.password)
+    ),
+    check('token').notEmpty().trim().escape(),
 ];
 
 export const authValidatorFieldsMiddleware = (

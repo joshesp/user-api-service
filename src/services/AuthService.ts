@@ -1,14 +1,31 @@
 
 import AppError from "../core/errors/AppError";
 import { IUserAuthData } from "../core/interfaces/IUserData";
+import { User } from "../entity/User";
+import PasswordResetRepository from "../repositories/PasswordResetRepository";
 import UserRepository from "../repositories/UserRepository";
+import { generateRandomToken } from "../utils/cryptoUtils";
 import { generateToken, verifyToken } from "../utils/jwt";
 
 class AuthService {
     private userRepository: UserRepository;
+    private passwordResetProv: PasswordResetRepository;
 
     constructor() {
         this.userRepository = new UserRepository();
+        this.passwordResetProv = new PasswordResetRepository();
+    }
+
+    public async autheticateById(userId: number): Promise<User> {
+        try {
+            const user = await this.userRepository.findById(userId);
+
+            this.verifyUserStatus(user);
+
+            return user!;
+        } catch (error) {
+            throw error;
+        }
     }
 
     public async authenticate(
@@ -17,27 +34,22 @@ class AuthService {
         try {
             const user = await this.userRepository.findByEmail(email);
 
-            if (!user) {
-                throw new AppError('User not found.', 401);
-            }
+            this.verifyUserStatus(user);
 
-            if (user.requestPasswordReset) {
+            const requestPasswordReset = await this.passwordResetProv.findByUser(user!.id);
+
+            if (requestPasswordReset) {
                 throw new AppError('User request password reset.', 401);
             }
 
-            if (!user.isAccountBlocked) {
-                throw new AppError('User is not active.', 401);
-            }
-
-            const isValidPassword = await user.validatePassword(password);
+            const isValidPassword = await user!.validatePassword(password);
 
             if (!isValidPassword) {
                 throw new AppError('Invalid password.', 401);
             }
 
-            const payloadJwt = { id: user.id, email: user.email };
-            const token = generateToken(payloadJwt);
-            const refreshToken = generateToken(payloadJwt, true);
+            const token = generateToken(user!.id);
+            const refreshToken = generateToken(user!.id, true);
 
             return { token, refreshToken };
         } catch (error) {
@@ -57,26 +69,35 @@ class AuthService {
         }
     }
 
-    /**
-     * resetPasswordUser
-     */
-    public async resetPasswordUser(email: string): Promise<void> {
+    public async requestPasswordResetUser(email: string): Promise<void> {
         try {
             const user = await this.userRepository.findByEmail(email);
 
-            if (!user) {
-                throw new AppError('User not found.', 401);
+            this.verifyUserStatus(user);
+
+            const requestPasswordReset = await this.passwordResetProv.findByUser(user!.id);
+
+            if (requestPasswordReset) {
+                await this.passwordResetProv.deleteByUser(user!.id);
             }
 
-            if (user.requestPasswordReset) {
-                // TODO: Invalidate code/token 
-            }
+            const token = generateRandomToken();
 
-            await this.userRepository.setRequestPasswordReset(user, true);
+            await this.passwordResetProv.create(user!.id, token);
 
-            // TODO: Send email/sms to user
+            // TODO: Send link or code (email/sms) to user
         } catch (error) {
             throw error;
+        }
+    }
+
+    private verifyUserStatus(user: User | null): void {
+        if (!user) {
+            throw new AppError('User not found.', 401);
+        }
+
+        if (user.isAccountBlocked) {
+            throw new AppError('User is not active.', 401);
         }
     }
 }

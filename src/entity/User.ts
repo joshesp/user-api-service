@@ -18,7 +18,7 @@ export class User {
     email!: string;
 
     @Column({ comment: "Contraseña del usuario" })
-    password!: string;
+    password?: string;
 
     @Column({
         name: "account_blocked",
@@ -26,13 +26,6 @@ export class User {
         comment: "Indica si el usuario está bloqueado(temporalmente o permanentemente)"
     })
     isAccountBlocked!: boolean;
-
-    @Column({
-        name: "request_password_reset",
-        default: false,
-        comment: "Indica si el usuario solicitó una restablecimiento de contraseña"
-    })
-    requestPasswordReset!: boolean;
 
     @Column({
         name: "last_login",
@@ -65,6 +58,6 @@ export class User {
     }
 
     async validatePassword(password: string): Promise<boolean> {
-        return await bcrypt.compare(password, this.password);
+        return await bcrypt.compare(password, this.password!);
     }
 }

@@ -10,6 +10,10 @@ class UserRepository {
         this.repository = AppDataSource.getRepository(User);
     }
 
+    public findById(id: number): Promise<User | null> {
+        return this.repository.findOneBy({ id });
+    }
+
     public findByEmail(email: string): Promise<User | null> {
         return this.repository.findOneBy({ email: email });
     }
@@ -23,12 +27,6 @@ class UserRepository {
         newUser.password = user.password;
 
         return this.repository.save(newUser);
-    }
-
-    public setRequestPasswordReset(user: User, requestPasswordReset: boolean): Promise<User> {
-        user.requestPasswordReset = requestPasswordReset;
-
-        return this.repository.save(user);
     }
 }
 

@@ -1,7 +1,5 @@
-import crypto from 'crypto';
+import crypto, { randomBytes } from 'crypto';
 import { ENCRYPTION_KEY } from '../config/env';
-
-const IV_LENGTH = 32;
 
 const cryptoKey = crypto
     .createHash('sha512')
@@ -28,4 +26,9 @@ export const decrypt = (text: string): string => {
         decipher.update(buff.toString('utf8'), 'hex', 'utf8') +
         decipher.final('utf8')
     )
+};
+
+export const generateRandomToken = (): string => {
+    const tokenBytes = randomBytes(32); // Generate 32 random bytes
+    return tokenBytes.toString('hex'); // Convert to hexadecimal string
 };
