@@ -1,9 +1,10 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../config/connectionDatabase";
-import { IUserData } from "../core/interfaces/IUserData";
+import { IUserData } from "../core/interfaces/payloads/IUserData";
+import { IUserRopository } from "../core/interfaces/user/IUserRopository";
 import { User } from "../entity/User";
 
-class UserRepository {
+class UserRepository implements IUserRopository {
     private repository: Repository<User>;
 
     constructor() {
@@ -30,11 +31,8 @@ class UserRepository {
     }
 
     public updateUser(user: User): Promise<User> {
-        console.log('::::::updateUser', user);
         return this.repository.save(user);
     }
-
-
 }
 
 export default UserRepository;

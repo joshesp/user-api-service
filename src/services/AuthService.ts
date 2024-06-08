@@ -1,13 +1,14 @@
 
 import AppError from "../core/errors/AppError";
-import { IUserAuthData } from "../core/interfaces/IUserData";
+import { IAuthSerice } from "../core/interfaces/auth/IAuthService";
+import { IUserAuthData } from "../core/interfaces/payloads/IUserData";
 import { User } from "../entity/User";
 import PasswordResetRepository from "../repositories/PasswordResetRepository";
 import UserRepository from "../repositories/UserRepository";
 import { generateRandomToken } from "../utils/cryptoUtils";
 import { generateToken, verifyToken } from "../utils/jwt";
 
-class AuthService {
+class AuthService implements IAuthSerice {
     private userRepository: UserRepository;
     private passwordResetProv: PasswordResetRepository;
 
@@ -33,11 +34,9 @@ class AuthService {
     ): Promise<{ token: string, refreshToken: string }> {
         try {
             const user = await this.userRepository.findByEmail(email);
-            console.log('::authenticate-user', user)
             this.verifyUserStatus(user);
 
             const requestPasswordReset = await this.passwordResetProv.findByUser(user!.id);
-            console.log('::authenticate-requestPasswordReset', requestPasswordReset);
             if (requestPasswordReset) {
                 throw new AppError('User request password reset.', 401);
             }
@@ -93,14 +92,12 @@ class AuthService {
 
     public async resetPassword(token: string, password: string): Promise<void> {
         try {
-
-            console.log('token:::::', token);
             const tokenData = await this.passwordResetProv.findByToken(token);
 
             if (!tokenData) {
                 throw new AppError('Invalid token.', 401);
             }
-            console.log('::::resetPassword', tokenData);
+
             const timeDifferenceInMinutes = Math.round((Date.now() - tokenData.createdAt.getTime()) / (1000 * 60));
 
             if (timeDifferenceInMinutes > 20) {
@@ -108,7 +105,7 @@ class AuthService {
             }
 
             const user = await this.userRepository.findById(tokenData.userId);
-            console.log('::::resetPassword', user)
+
             if (!user) {
                 throw new AppError('User not found.', 401);
             }

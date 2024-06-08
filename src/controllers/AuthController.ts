@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { IAuthController } from "../core/interfaces/IAuthController";
+import { IAuthController } from "../core/interfaces/auth/IAuthController";
 import AuthService from "../services/AuthService";
 import UserService from "../services/UserService";
 import Logger from "../utils/Logger";

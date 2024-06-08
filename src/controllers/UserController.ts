@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { IUserController } from '../core/interfaces/IUserController';
+import { IUserController } from '../core/interfaces/user/IUserController';
 
 class UserController implements IUserController {
     async info(_: Request, res: Response, next: NextFunction): Promise<void> {

@@ -1,8 +1,9 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../config/connectionDatabase";
+import { IPasswordResetRepository } from "../core/interfaces/auth/IPasswordResetRepository";
 import { PasswordReset } from "../entity/PasswordReset";
 
-class PasswordResetRepository {
+class PasswordResetRepository implements IPasswordResetRepository {
     private repository: Repository<PasswordReset>;
 
     constructor() {
@@ -19,7 +20,6 @@ class PasswordResetRepository {
     }
 
     public findByUser(userId: number): Promise<PasswordReset | null> {
-        console.log('::::::findByUser', userId);
         return this.repository.findOne({ where: { userId } })
     }
 
@@ -28,7 +28,6 @@ class PasswordResetRepository {
     }
 
     public deleteByUser(userId: number): Promise<unknown> {
-        console.log('::::::deleteByUser', userId);
         return this.repository.delete({ userId });
     }
 

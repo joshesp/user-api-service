@@ -1,9 +1,10 @@
 
 import AppError from "../core/errors/AppError";
-import { IUserData } from "../core/interfaces/IUserData";
+import { IUserData } from "../core/interfaces/payloads/IUserData";
+import { IUserService } from "../core/interfaces/user/IUserService";
 import UserRepository from "../repositories/UserRepository";
 
-class UserService {
+class UserService implements IUserService {
     private userRepository: UserRepository;
 
     constructor() {
