@@ -19,6 +19,7 @@ const authMiddleware = async (
         const user = await AuthService.autheticateById(userId);
 
         req.user = user;
+
         next();
     } catch (error) {
         throw new AppError('Invalid token', 401);

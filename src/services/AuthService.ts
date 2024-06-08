@@ -1,4 +1,5 @@
 
+import { ID_MESSAGES_ERROR } from "../config/constanst";
 import AppError from "../core/errors/AppError";
 import { IAuthSerice } from "../core/interfaces/auth/IAuthService";
 import { IUserAuthData } from "../core/interfaces/payloads/IUserData";
@@ -34,17 +35,21 @@ class AuthService implements IAuthSerice {
     ): Promise<{ token: string, refreshToken: string }> {
         try {
             const user = await this.userRepository.findByEmail(email);
+
             this.verifyUserStatus(user);
 
-            const requestPasswordReset = await this.passwordResetProv.findByUser(user!.id);
+            const requestPasswordReset = await this.passwordResetProv.findByUser(
+                user!.id
+            );
+
             if (requestPasswordReset) {
-                throw new AppError('User request password reset.', 401);
+                throw new AppError(ID_MESSAGES_ERROR.RESET_PASSWORD_REQ, 401);
             }
 
             const isValidPassword = await user!.validatePassword(password);
 
             if (!isValidPassword) {
-                throw new AppError('Invalid password.', 401);
+                throw new AppError(ID_MESSAGES_ERROR.INVALID_PASSWORD, 401);
             }
 
             const token = generateToken(user!.id);
@@ -56,7 +61,9 @@ class AuthService implements IAuthSerice {
         }
     };
 
-    public async refreshAccessToken(token: string): Promise<{ token: string, refreshToken: string }> {
+    public async refreshAccessToken(
+        token: string
+    ): Promise<{ token: string, refreshToken: string }> {
         try {
             const decoded = verifyToken(token, true);
             const newToken = generateToken(decoded);
@@ -64,7 +71,7 @@ class AuthService implements IAuthSerice {
 
             return { token: newToken, refreshToken };
         } catch (error) {
-            throw new AppError('Invalid refresh token', 401);
+            throw new AppError(ID_MESSAGES_ERROR.TOKEN_NOT_FOUND, 401);
         }
     }
 
@@ -74,7 +81,9 @@ class AuthService implements IAuthSerice {
 
             this.verifyUserStatus(user);
 
-            const requestPasswordReset = await this.passwordResetProv.findByUser(user!.id);
+            const requestPasswordReset = await this.passwordResetProv.findByUser(
+                user!.id
+            );
 
             if (requestPasswordReset) {
                 await this.passwordResetProv.deleteByUser(user!.id);
@@ -95,19 +104,21 @@ class AuthService implements IAuthSerice {
             const tokenData = await this.passwordResetProv.findByToken(token);
 
             if (!tokenData) {
-                throw new AppError('Invalid token.', 401);
+                throw new AppError(ID_MESSAGES_ERROR.TOKEN_NOT_FOUND, 401);
             }
 
-            const timeDifferenceInMinutes = Math.round((Date.now() - tokenData.createdAt.getTime()) / (1000 * 60));
+            const timeDifferenceInMinutes = Math.round(
+                (Date.now() - tokenData.createdAt.getTime()) / (1000 * 60)
+            );
 
             if (timeDifferenceInMinutes > 20) {
-                throw new AppError('Token has expired.', 401);
+                throw new AppError(ID_MESSAGES_ERROR.TOKEN_EXPIRED, 401);
             }
 
             const user = await this.userRepository.findById(tokenData.userId);
 
             if (!user) {
-                throw new AppError('User not found.', 401);
+                throw new AppError(ID_MESSAGES_ERROR.USER_NOT_FOUND, 401);
             }
 
             user.password = password;
@@ -119,13 +130,16 @@ class AuthService implements IAuthSerice {
         }
     }
 
+    /**
+     * Se valida si el usario existe y no esta bloqueado
+     */
     private verifyUserStatus(user: User | null): void {
         if (!user) {
-            throw new AppError('User not found.', 401);
+            throw new AppError(ID_MESSAGES_ERROR.USER_NOT_FOUND, 401);
         }
 
         if (user.isAccountBlocked) {
-            throw new AppError('User is not active.', 401);
+            throw new AppError(ID_MESSAGES_ERROR.USER_BLOCKED, 401);
         }
     }
 }

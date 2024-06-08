@@ -76,7 +76,7 @@ export const userPasswordResetFieldsRequired = [
 ];
 
 /**
- * Utilida de 'express-validator' para ejecutar las validaciones
+ * Utilidd de 'express-validator' para ejecutar las validaciones
  * configuradas
  */
 
