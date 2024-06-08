@@ -12,6 +12,9 @@ const encryptionIV = crypto
     .digest('hex')
     .substring(0, 16)
 
+/**
+* Ecriptación de un string
+*/
 export const encrypt = (text: string): string => {
     const cipher = crypto.createCipheriv('aes-256-cbc', cryptoKey, encryptionIV)
     return Buffer.from(
@@ -19,6 +22,9 @@ export const encrypt = (text: string): string => {
     ).toString('base64');
 };
 
+/**
+ * Des-ecriptación de un string generado
+ */
 export const decrypt = (text: string): string => {
     const buff = Buffer.from(text, 'base64')
     const decipher = crypto.createDecipheriv('aes-256-cbc', cryptoKey, encryptionIV)
@@ -28,7 +34,10 @@ export const decrypt = (text: string): string => {
     )
 };
 
+/**
+ * Generación de token random
+ */
 export const generateRandomToken = (): string => {
-    const tokenBytes = randomBytes(32); // Generate 32 random bytes
-    return tokenBytes.toString('hex'); // Convert to hexadecimal string
+    const tokenBytes = randomBytes(32);
+    return tokenBytes.toString('hex');
 };
