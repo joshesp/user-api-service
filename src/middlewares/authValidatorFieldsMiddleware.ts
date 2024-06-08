@@ -29,6 +29,12 @@ const fieldEmail = check('email')
     .isLength({ max: 50 }).normalizeEmail({
         gmail_remove_dots: false
     });
+const fieldEmailNewAccount = check('email')
+    .isEmail()
+    .withMessage('El correo electrónico no es valido.')
+    .isLength({ max: 50 }).normalizeEmail({
+        gmail_remove_dots: false
+    });
 const fieldPassword = check('password')
     .notEmpty()
     .withMessage('La contraseña es requerida.')
@@ -58,7 +64,7 @@ const fieldToken = check('token')
 export const userNewFieldsRequired = [
     fieldName,
     fieldLastname,
-    fieldEmail.custom(async (value) => {
+    fieldEmailNewAccount.custom(async (value) => {
         const userExist = await new UserRepository().findByEmail(value);
         if (userExist) {
             throw new AppError('El correo electrónico ya existe', 400);
