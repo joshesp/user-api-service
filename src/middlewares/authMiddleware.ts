@@ -1,8 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import AppError from '../core/errors/AppError';
+import AuthService from '../services/AuthService';
 import { verifyToken } from '../utils/jwt';
 
-const authMiddleware = (req: Request, _: Response, next: NextFunction): void => {
+const authMiddleware = async (
+    req: Request, _: Response, next: NextFunction
+): Promise<void> => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
@@ -12,8 +15,10 @@ const authMiddleware = (req: Request, _: Response, next: NextFunction): void => 
     const token = authHeader.split(' ')[1];
 
     try {
-        const decoded = verifyToken(token);
-        req.user = decoded;
+        const userId = verifyToken(token);
+        const user = await AuthService.autheticateById(userId);
+
+        req.user = user;
         next();
     } catch (error) {
         throw new AppError('Invalid token', 401);

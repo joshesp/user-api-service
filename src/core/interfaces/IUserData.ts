@@ -11,10 +11,3 @@ export interface IUserAuthData {
     email: string;
     password: string;
 }
-
-export interface IUserSession {
-    id: number,
-    email: string;
-    iat?: number,
-    exp?: number
-}

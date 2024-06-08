@@ -1,6 +1,10 @@
 import jwt from 'jsonwebtoken';
-import { JWT_EXPIRATION, JWT_REFRESH_EXPIRES_IN, JWT_REFRESH_SECRET, JWT_SECRET } from '../config/env';
-import { IUserSession } from '../core/interfaces/IUserData';
+import {
+    JWT_EXPIRATION,
+    JWT_REFRESH_EXPIRES_IN,
+    JWT_REFRESH_SECRET,
+    JWT_SECRET
+} from '../config/env';
 import { decrypt, encrypt } from './cryptoUtils';
 
 
@@ -11,22 +15,22 @@ const jwtValuesEnv = (isRefreshToken: boolean): { jwtSecret: string, jwtExpiresI
     };
 }
 
-export const generateToken = (payload: IUserSession, isRefreshToken = false): string => {
+export const generateToken = (userId: number, isRefreshToken = false): string => {
     const { jwtSecret, jwtExpiresIn } = jwtValuesEnv(isRefreshToken);
 
-    const encryptedId = encrypt(`${payload.id}`);
-    const tokenPayload = { id: encryptedId, email: payload.email };
+    const encryptedId = encrypt(`${userId}`);
+    const tokenPayload = { uuid: encryptedId };
     return jwt.sign(tokenPayload, jwtSecret, { expiresIn: jwtExpiresIn });
 };
 
-export const verifyToken = (token: string, isRefreshToken = false): IUserSession => {
+export const verifyToken = (token: string, isRefreshToken = false): number => {
     const { jwtSecret } = jwtValuesEnv(isRefreshToken);
 
     try {
-        const decoded = jwt.verify(token, jwtSecret) as { id: string, email: string };
-        const decryptedId = decrypt(decoded.id);
+        const decoded = jwt.verify(token, jwtSecret) as { [key: string]: any };
+        const decryptedId = decrypt(decoded.uuid);
 
-        return { ...decoded, id: +decryptedId };
+        return +decryptedId;
     } catch (error) {
         throw new Error('Invalid token');
     }

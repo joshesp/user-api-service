@@ -1,9 +1,9 @@
-import { IUserSession } from '../interfaces/IUserData';
+import { User } from '../entity/User';
 
 declare global {
     namespace Express {
         export interface Request {
-            user: IUserSession
+            user: User
         }
     }
 }
