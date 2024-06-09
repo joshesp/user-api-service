@@ -26,7 +26,7 @@ class Server {
         this.app.use(`${this.context}/users`, userRoutes);
         this.app.use(`${this.context}/auth`, authRoutes);
         this.app.use(
-            `${this.context}/docs`,
+            `${CONTEXT_API}/docs`,
             swaggerUi.serve,
             swaggerUi.setup(undefined, {
                 swaggerOptions: {
