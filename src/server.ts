@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express, { Application } from 'express';
+import swaggerUi from 'swagger-ui-express';
 import { CONTEXT_API } from './config/constanst';
 import errorMiddleware from './middlewares/errorMiddleware';
 import authRoutes from './routes/authRoutes';
@@ -24,6 +25,15 @@ class Server {
 
         this.app.use(`${this.context}/users`, userRoutes);
         this.app.use(`${this.context}/auth`, authRoutes);
+        this.app.use(
+            `${this.context}/docs`,
+            swaggerUi.serve,
+            swaggerUi.setup(undefined, {
+                swaggerOptions: {
+                    url: '/swagger.json',
+                },
+            })
+        )
 
         this.app.use(errorMiddleware);
     }

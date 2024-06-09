@@ -4,9 +4,9 @@
   "description": "Microservicio para el gestion relacionada a los usuarios de la aplicación Cuentas App",
   "main": "dist/app.js",
   "scripts": {
-    "start": "node dist/app.js",
-    "dev": "nodemon",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec-and-routes\"",
+    "build": "tsoa spec-and-routes && tsc",
+    "start": "node build/src/server.js"
   },
   "keywords": [
     "Cuentas App",
@@ -24,6 +24,8 @@
     "multer": "^1.4.5-lts.1",
     "pg": "^8.11.5",
     "reflect-metadata": "^0.2.2",
+    "swagger-ui-express": "^5.0.1",
+    "tsoa": "^6.3.0",
     "typeorm": "^0.3.20",
     "winston": "^3.13.0"
   },
@@ -35,6 +37,8 @@
     "@types/multer": "^1.4.11",
     "@types/node": "^20.13.0",
     "@types/pg": "^8.11.6",
+    "@types/swagger-ui-express": "^4.1.6",
+    "concurrently": "^8.2.2",
     "nodemon": "^3.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"

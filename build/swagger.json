@@ -1,0 +1,38 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {},
+		"securitySchemes": {
+			"bearerAuth": {
+				"name": "Authorization",
+				"in": "header",
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT",
+				"description": "JWT Authorization header"
+			}
+		}
+	},
+	"info": {
+		"title": "ndj-user-service",
+		"version": "1.0.0",
+		"description": "Microservicio para el gestion relacionada a los usuarios de la aplicación Cuentas App",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {
+			"name": "Josué Espinosa Alvarado"
+		}
+	},
+	"paths": {},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
