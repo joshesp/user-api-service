@@ -2,7 +2,7 @@
 import { ID_MESSAGES_ERROR } from "../config/constanst";
 import AppError from "../core/errors/AppError";
 import { IAuthSerice } from "../core/interfaces/auth/IAuthService";
-import { IUserAuthData } from "../core/interfaces/payloads/IUserData";
+import { IUserAuthData } from "../core/interfaces/payloads/IUserAuthData";
 import { User } from "../entity/User";
 import PasswordResetRepository from "../repositories/PasswordResetRepository";
 import UserRepository from "../repositories/UserRepository";

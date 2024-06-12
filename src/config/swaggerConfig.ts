@@ -1,14 +1,26 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 
-const options = {
-    definition: {
-        openapi: '3.0.0',
+const options: swaggerJsdoc.Options = {
+    swaggerDefinition: {
+        openapi: "3.1.0",
         info: {
-            title: 'API Documentation',
+            title: 'Cuentas App',
             version: '1.0.0',
+            description: "Documentación de los endpoints disponobles para la autenticación del usuario de Cuentas App",
+            license: {
+                name: "MIT",
+                url: "https://spdx.org/licenses/MIT.html",
+            }
         },
+        servers: [
+            {
+                url: "http://localhost:8080",
+                description: "Local server"
+            },
+        ],
     },
     apis: ['./src/routes/*.ts'],
+
 };
 
 const swaggerSpec = swaggerJsdoc(options);
