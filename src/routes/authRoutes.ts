@@ -69,6 +69,46 @@ const router = Router();
  *          lastname: Doe
  *          email: johndoe@mail.com
  *          password: johnDoe20!@
+ *     RefreshTokenRequest:
+ *       type: object
+ *       required:
+ *         - token
+ *       properties:
+ *         token:
+ *           type: string
+ *           description: Refresh token generado en la autenticación
+ *       example:
+ *         token: ewceThbu23...
+ *     ResetPasswordRequest:
+ *       type: object
+ *       required:
+ *         - email
+ *       properties:
+ *         email:
+ *           type: string
+ *           description: Correo del usuario
+ *       example:
+ *         email: johndoe@mail.com
+ *     UpdatePasswordRequest:
+ *       type: object
+ *       required:
+ *         - password
+ *         - passwordConfirmation
+ *         - token
+ *       properties:
+ *         password:
+ *           type: string
+ *           description: Nueva contraseña
+ *         passwordConfirmation:
+ *           type: string
+ *           description: Confirmación del valor para la nueva contraseña
+ *         token:
+ *           type: string
+ *           description: Token para la validación de actualización de la contraseña
+ *       example:
+ *         password: tl8&2wUj
+ *         passwordConfirmation: tl8&2wUj
+ *         token: fye8f823dj...
  */
 
 /**
@@ -143,27 +183,14 @@ router.post(
  *      content:
  *        application/json:
  *           schema:
- *            type: object
- *            required:
- *              - token
- *            properties:
- *              token:
- *                type: string
- *                default: ewceThbu23...
+ *            $ref: '#/components/schemas/RefreshTokenRequest'
  *     responses:
  *      200:
  *        description: Token actualizado
  *        content:
  *          application/json:
  *             schema:
- *                type: object 
- *                properties:
- *                   token:
- *                      type: string
- *                      default: unwxnwY81e...
- *                   refreshToken:
- *                      type: string
- *                      default: hdn213kmsx/xe1...
+ *               $ref: '#/components/schemas/LoginResponse'
  *      401:
  *        description: Token invalido
  *      500:
@@ -186,13 +213,7 @@ router.post(
  *      content:
  *        application/json:
  *           schema:
- *            type: object
- *            required:
- *              - email
- *            properties:
- *              email:
- *                type: string
- *                default: johndoe@mail.com
+ *            $ref: '#/components/schemas/ResetPasswordRequest'
  *     responses:
  *      200:
  *        description: Solicitud existosa
@@ -218,21 +239,7 @@ router.post(
  *      content:
  *        application/json:
  *           schema:
- *            type: object
- *            required:
- *              - password
- *              - passwordConfirmation
- *              - token
- *            properties:
- *              password:
- *                type: string
- *                default: tl8&2wUj
- *              passwordConfirmation:
- *                type: string
- *                default: tl8&2wUj
- *              token:
- *                type: string
- *                default: fye8f823dj...
+ *            $ref: '#/components/schemas/ResetPasswordRequest'
  *     responses:
  *      200:
  *        description: Contraseña actualizada
