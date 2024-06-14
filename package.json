@@ -1,19 +1,28 @@
 {
   "name": "ndj-user-service",
   "version": "1.0.0",
-  "description": "Microservicio para el gestion relacionada a los usuarios de la aplicación Cuentas App",
+  "description": "Microservicio para el gestion relacionada a los usuarios de la aplicación MisCuentasApp",
   "main": "dist/app.js",
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon",
+    "build": "node_modules/.bin/tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "Cuentas App",
+    "MisCuentasApp",
     "Microservice de usuarios"
   ],
   "author": "Josué Espinosa Alvarado",
   "license": "ISC",
+  "engines": {
+    "node": ">=21.0.0",
+    "npm": ">=10.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://josue_dev@bitbucket.org/josue_dev/backend-app-vocabulary.git"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
