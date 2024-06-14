@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon",
-    "prebuild": "npm install",
+    "prebuild": "npm install --force",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
