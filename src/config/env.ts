@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const PORT = process.env.PORT || '3000';
+const PORT = process.env.PORT || '8080';
 const IS_PRODUCTION = (process.env.NODE_ENV !== 'development');
 
 const POSTGRES_CONNECTION = process.env.POSTGRES_CONNECTION;
