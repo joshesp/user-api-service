@@ -1,15 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
-import AppError from '../core/errors/AppError';
 import AuthService from '../services/AuthService';
 import { verifyToken } from '../utils/jwt';
+import Logger from '../utils/Logger';
 
 const authMiddleware = async (
-    req: Request, _: Response, next: NextFunction
-): Promise<void> => {
+    req: Request, res: Response, next: NextFunction
+) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-        throw new AppError('No token provided', 401);
+        return res.status(401).json('No token provided.');
     }
 
     const token = authHeader.split(' ')[1];
@@ -22,7 +22,8 @@ const authMiddleware = async (
 
         next();
     } catch (error) {
-        throw new AppError('Invalid token', 401);
+        Logger.error(error)
+        return res.status(401).json('Invalid token.')
     }
 };
 
