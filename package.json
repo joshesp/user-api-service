@@ -1,7 +1,7 @@
 {
   "name": "ndj-user-service",
   "version": "1.0.0",
-  "description": "Microservicio para el gestion relacionada a los usuarios de la aplicación MisCuentasApp",
+  "description": "Microservicio para el gestion relacionada a los usuarios",
   "main": "dist/app.js",
   "scripts": {
     "start": "node dist/app.js",
