@@ -11,7 +11,7 @@ const router = Router();
  *      BearerAuth:
  *         type: http
  *         scheme: bearer
- *         bearerFormat: JWT
+ *         in: header
  *   schemas:
  *     UsuarioResponse:
  *       type: object
@@ -38,7 +38,9 @@ const router = Router();
  *         lastname: Doe
  *         email: johndoe@mail.com
  *         lastLogin: 2024-06-13T04:44:56.293Z
- */
+ * security:
+ *    - bearerAuth: [] 
+*/
 
 /**
  * @openapi
