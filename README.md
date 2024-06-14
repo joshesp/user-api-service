@@ -76,8 +76,8 @@ ENCRYPTION_KEY=encryption_key
 - **config:**
   - connectionDatabase.ts: Configuraciones para la conexión a base de datos.
   - constanst.ts: Constantes para el servicio.
-  - env.ts: Archivo con las definiciones de las varibles de entorno.
-  - swaggerConfig.ts: Definiciones básicas para la docuemntación del API.
+  - env.ts: Archivo con las definiciones de las variables de entorno.
+  - swaggerConfig.ts: Definiciones básicas para la documentación del API.
 - **controllers:**
   - authController.ts: Controlador de autenticación.
   - userController.ts: Controlador de usuario.
@@ -97,7 +97,7 @@ ENCRYPTION_KEY=encryption_key
       - IUserRepository.ts: Interfaz para el repositorio de usuario.
       - IUserService.ts: Interfaz para el servicio de usuario.
 - **types**
-  index.d.ts: Definicion de los tipos de datos.
+  index.d.ts: Definición de los tipos de datos.
 - **entity:**
   - PasswordReset.ts: Entidad para la recuperación de contraseña.
   - User.ts: Entidad de usuario.
@@ -107,7 +107,7 @@ ENCRYPTION_KEY=encryption_key
   - errorMiddleware.ts: Middleware para manejar los errores.
 - **repositories:**
   - PasswordResetRepository.ts: Repositorio de base de datos para agregar/actualizar/eliminar registros de la tabla de recuperación de contraseña.
-  - UserRepository.ts: Repositorio de base de datos para agrega/actualizar/obtener registros de la tabla de usuarios.
+  - UserRepository.ts: Repositorio de base de datos para agregar/actualizar/obtener registros de la tabla de usuarios.
 - **routes:**
   - authRoutes.ts: Rutas para el controlador de autenticación.
   - userRoutes.ts: Rutas para el controlador de usuario.
