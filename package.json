@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon",
+    "prebuild": "npm install",
     "build": "node_modules/.bin/tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,8 +17,8 @@
   "author": "Josué Espinosa Alvarado",
   "license": "ISC",
   "engines": {
-    "node": ">=21.0.0",
-    "npm": ">=10.2.1"
+    "node": "21.0.0",
+    "npm": "10.2.1"
   },
   "repository": {
     "type": "git",
