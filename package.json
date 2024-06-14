@@ -7,7 +7,7 @@
     "start": "node dist/app.js",
     "dev": "nodemon",
     "prebuild": "npm install",
-    "build": "node_modules/.bin/tsc",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -16,10 +16,6 @@
   ],
   "author": "Josué Espinosa Alvarado",
   "license": "ISC",
-  "engines": {
-    "node": "21.0.0",
-    "npm": "10.2.1"
-  },
   "repository": {
     "type": "git",
     "url": "https://josue_dev@bitbucket.org/josue_dev/backend-app-vocabulary.git"
