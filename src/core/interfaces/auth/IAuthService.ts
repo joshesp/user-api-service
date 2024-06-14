@@ -1,5 +1,6 @@
 import { User } from "../../../entity/User";
-import { IUserAuthData } from "../payloads/IUserData";
+import { IUserAuthData } from "../payloads/IUserAuthData";
+
 
 export interface IAuthSerice {
     autheticateById(userId: number): Promise<User>;
