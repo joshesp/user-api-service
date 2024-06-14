@@ -47,7 +47,7 @@ const router = Router();
  * tags:
  *    name: Usuario
  *    description: Endpoints para las acciones relacionada a la gestión de la cuenta del usuario en sesión
- * '/api/users':
+ * '/users':
  *  get:
  *     summary: Validación de credenciales para el acceso de un usuario.
  *     tags: [Usuario]

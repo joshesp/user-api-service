@@ -116,7 +116,7 @@ const router = Router();
  * tags:
  *    name: Autenticación
  *    description: Endpoints relacionados con la validación, creación de una cuenta de usuario, la recuperación y actualización de contraseña y actualización del JW token de la sesión del usuario.
- * '/api/auth/login':
+ * '/auth/login':
  *  post:
  *     summary: Validación de credenciales para el acceso de un usuario.
  *     tags: [Autenticación]
@@ -148,7 +148,7 @@ router.post(
 
 /**
  * @openapi
- * '/api/auth/register':
+ * '/auth/register':
  *  post:
  *     tags: [Autenticación]
  *     summary: Creación de una cuenta para un usuario.
@@ -174,7 +174,7 @@ router.post(
 
 /**
  * @openapi
- * '/api/auth/refresh-token':
+ * '/auth/refresh-token':
  *  post:
  *     summary: Actualización del JW Token.
  *     tags: [Autenticación]
@@ -204,7 +204,7 @@ router.post(
 
 /**
  * @openapi
- * '/api/auth/reset-password':
+ * '/auth/reset-password':
  *  post:
  *     summary: Solicitud de renovación de contraseña.
  *     tags: [Autenticación]
@@ -230,7 +230,7 @@ router.post(
 
 /**
  * @openapi
- * '/api/auth/update-password':
+ * '/auth/update-password':
  *  post:
  *     summary: Actualización de contraseña.
  *     tags: [Autenticación]
