@@ -4,9 +4,9 @@ const options: swaggerJsdoc.Options = {
     swaggerDefinition: {
         openapi: "3.1.0",
         info: {
-            title: 'MisCuentasApp',
+            title: 'User API Service',
             version: '1.0.0',
-            description: "Documentación de los endpoints disponobles para la autenticación del usuario de MisCuentasApp",
+            description: "Documentación de los endpoints disponobles para la autenticación del usuario",
             license: {
                 name: "MIT",
                 url: "https://spdx.org/licenses/MIT.html",

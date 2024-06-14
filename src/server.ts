@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express, { Application } from 'express';
 import swaggerUi from 'swagger-ui-express';
+import { CONTEXT_API } from './config/constanst';
 import swaggerSpec from './config/swaggerConfig';
 import errorMiddleware from './middlewares/errorMiddleware';
 import authRoutes from './routes/authRoutes';
@@ -22,8 +23,8 @@ class Server {
         this.app.use(cors());
         this.app.use(express.json());
 
-        this.app.use(`/users`, userRoutes);
-        this.app.use(`/auth`, authRoutes);
+        this.app.use(`${CONTEXT_API}/users`, userRoutes);
+        this.app.use(`${CONTEXT_API}/auth`, authRoutes);
         this.app.use(
             `/api-docs`,
             swaggerUi.serve,
