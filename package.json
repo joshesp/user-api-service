@@ -1,6 +1,6 @@
 {
   "name": "ndj-user-service",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Microservicio para el gestion relacionada a los usuarios",
   "main": "dist/app.js",
   "scripts": {
