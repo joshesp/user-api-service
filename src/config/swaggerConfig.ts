@@ -11,13 +11,7 @@ const options: swaggerJsdoc.Options = {
                 name: "MIT",
                 url: "https://spdx.org/licenses/MIT.html",
             }
-        },
-        servers: [
-            {
-                url: "http://localhost:8080",
-                description: "Local server"
-            },
-        ],
+        }
     },
     apis: ['./src/routes/*.ts'],
 
