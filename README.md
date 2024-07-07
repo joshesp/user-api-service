@@ -58,13 +58,13 @@ npm install
 ```env
 NODE_ENV=development|production|test
 PORT=number
-POSTGRES_CONNECTION=connection-string
-POSTGRES_CONNECTION_TIMEOUT=number
-JWT_SECRET=jwt_secret
-JWT_EXPIRATION=1d|1w|20m|...
-JWT_REFRESH_SECRET=jwt_refresh_secret
-JWT_REFRESH_EXPIRES_IN=1d|1w|20m|...
-ENCRYPTION_KEY=encryption_key
+APP_DATABASE_URL=connection-string
+APP_DATABASE_TIMEOUT=number
+APP_JWT_SECRET=jwt_secret
+APP_JWT_EXPIRES_IN=1d|1w|20m|...
+APP_JWT_REFRESH_SECRET=jwt_refresh_secret
+APP_JWT_REFRESH_EXPIRES_IN=1d|1w|20m|...
+APP_ENCRYPTION_SECRET=encryption_key
 ```
 
 <a name="structure"></a>

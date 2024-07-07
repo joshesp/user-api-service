@@ -1,8 +1,8 @@
 import crypto, { randomBytes } from 'crypto';
-import { ENCRYPTION_KEY } from '../config/env';
+import { APP_ENCRYPTION_SECRET } from '../config/env';
 
-const KEY = Buffer.from(ENCRYPTION_KEY);
-const IV = Buffer.from(ENCRYPTION_KEY.slice(-16));
+const KEY = Buffer.from(APP_ENCRYPTION_SECRET);
+const IV = Buffer.from(APP_ENCRYPTION_SECRET.slice(-16));
 
 export const encrypt = (text: string): string => {
     let cipher = crypto.createCipheriv('aes-256-cbc', KEY, IV);
