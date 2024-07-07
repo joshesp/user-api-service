@@ -26,11 +26,11 @@ class Server {
         this.app.use(`${CONTEXT_API}/users`, userRoutes);
         this.app.use(`${CONTEXT_API}/auth`, authRoutes);
         this.app.use(
-            `/api-docs`,
+            `/docs`,
             swaggerUi.serve,
             swaggerUi.setup(swaggerSpec)
         );
-        this.app.get(`/api-docs.json`, (_, res) => {
+        this.app.get(`/docs.json`, (_, res) => {
             res.setHeader('Content-Type', 'application/json')
             res.send(swaggerSpec)
         });

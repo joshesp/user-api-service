@@ -13,7 +13,7 @@ const JWT_EXPIRATION = process.env.JWT_EXPIRATION || '15m';
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'fePJWwOc-121QItIg';
 const JWT_REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || '7d';
 
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || 'he1BrdwwOcQIt3jIgn4Fbw==';
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || '';
 
 export {
   ENCRYPTION_KEY,
