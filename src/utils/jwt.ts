@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
 import {
-    JWT_EXPIRATION,
-    JWT_REFRESH_EXPIRES_IN,
-    JWT_REFRESH_SECRET,
-    JWT_SECRET
+    APP_JWT_EXPIRES_IN,
+    APP_JWT_REFRESH_EXPIRES_IN,
+    APP_JWT_REFRESH_SECRET,
+    APP_JWT_SECRET
 } from '../config/env';
 import { decrypt, encrypt } from './cryptoUtils';
 
@@ -15,8 +15,8 @@ const jwtValuesEnv = (
     isRefreshToken: boolean
 ): { jwtSecret: string, jwtExpiresIn: string } => {
     return {
-        jwtSecret: isRefreshToken ? JWT_REFRESH_SECRET : JWT_SECRET,
-        jwtExpiresIn: isRefreshToken ? JWT_REFRESH_EXPIRES_IN : JWT_EXPIRATION
+        jwtSecret: isRefreshToken ? APP_JWT_REFRESH_SECRET : APP_JWT_SECRET,
+        jwtExpiresIn: isRefreshToken ? APP_JWT_REFRESH_EXPIRES_IN : APP_JWT_EXPIRES_IN
     };
 }
 
