@@ -1,14 +1,17 @@
 
+import { Body, Post, Response, Route, Tags } from "tsoa";
 import { ID_MESSAGES_ERROR } from "../config/constanst";
 import AppError from "../core/errors/AppError";
 import { IAuthSerice } from "../core/interfaces/auth/IAuthService";
-import { IUserAuthData } from "../core/interfaces/payloads/IUserAuthData";
+import { IResponseToken, IUserAuthData } from "../core/interfaces/payloads/IUserAuthData";
 import { User } from "../entity/User";
 import PasswordResetRepository from "../repositories/PasswordResetRepository";
 import UserRepository from "../repositories/UserRepository";
 import { generateRandomToken } from "../utils/cryptoUtils";
 import { generateToken, verifyToken } from "../utils/jwt";
 
+@Route("auth")
+@Tags("Autenticación")
 class AuthService implements IAuthSerice {
     private userRepository: UserRepository;
     private passwordResetProv: PasswordResetRepository;
@@ -30,9 +33,20 @@ class AuthService implements IAuthSerice {
         }
     }
 
+    @Post('login')
+    @Response<string>(
+        403,
+        'Unauthorized error',
+        'Sorry, the credentials are incorrect.'
+    )
+    @Response<string>(
+        500,
+        'System error',
+        'Sorry, something went wrong.'
+    )
     public async authenticate(
-        { email, password }: IUserAuthData
-    ): Promise<{ token: string, refreshToken: string }> {
+        @Body() { email, password }: IUserAuthData
+    ): Promise<IResponseToken> {
         try {
             const user = await this.userRepository.findByEmail(email);
 
@@ -43,13 +57,13 @@ class AuthService implements IAuthSerice {
             );
 
             if (requestPasswordReset) {
-                throw new AppError(ID_MESSAGES_ERROR.RESET_PASSWORD_REQ, 401);
+                throw new AppError(ID_MESSAGES_ERROR.RESET_PASSWORD_REQ, 403);
             }
 
             const isValidPassword = await user!.validatePassword(password);
 
             if (!isValidPassword) {
-                throw new AppError(ID_MESSAGES_ERROR.INVALID_PASSWORD, 401);
+                throw new AppError(ID_MESSAGES_ERROR.INVALID_PASSWORD, 403);
             }
 
             const token = generateToken(user!.id);
@@ -63,7 +77,7 @@ class AuthService implements IAuthSerice {
 
     public async refreshAccessToken(
         token: string
-    ): Promise<{ token: string, refreshToken: string }> {
+    ): Promise<IResponseToken> {
         try {
             const decoded = verifyToken(token, true);
             const newToken = generateToken(decoded);
