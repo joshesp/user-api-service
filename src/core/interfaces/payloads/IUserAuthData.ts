@@ -4,5 +4,15 @@ export interface IUserAuthData {
 }
 
 export interface IResponseToken {
-    token: string, refreshToken: string
+    token: string,
+    refreshToken: string
+}
+
+export interface IRefreshToken {
+    refreshToken: string
+}
+
+export interface IUpdatePassword {
+    password: string,
+    token: string
 }

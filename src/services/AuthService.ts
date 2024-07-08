@@ -3,7 +3,8 @@ import { Body, Post, Response, Route, Tags } from "tsoa";
 import { ID_MESSAGES_ERROR } from "../config/constanst";
 import AppError from "../core/errors/AppError";
 import { IAuthSerice } from "../core/interfaces/auth/IAuthService";
-import { IResponseToken, IUserAuthData } from "../core/interfaces/payloads/IUserAuthData";
+import { IRefreshToken, IResponseToken, IUpdatePassword, IUserAuthData } from "../core/interfaces/payloads/IUserAuthData";
+import { IUserCreateData } from "../core/interfaces/payloads/IUserData";
 import { User } from "../entity/User";
 import PasswordResetRepository from "../repositories/PasswordResetRepository";
 import UserRepository from "../repositories/UserRepository";
@@ -75,8 +76,40 @@ class AuthService implements IAuthSerice {
         }
     };
 
+    @Post('register')
+    @Response<string>(
+        400,
+        'Bad request error',
+        'Sorry, the request is invalid.'
+    )
+    @Response<string>(
+        500,
+        'System error',
+        'Sorry, something went wrong.'
+    )
+    public async register(@Body() user: IUserCreateData): Promise<number> {
+        try {
+            const newUser = await this.userRepository.createUser(user);
+
+            return newUser.id;
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    @Post('refresh-token')
+    @Response<string>(
+        403,
+        'Unauthorized error',
+        'Sorry, the credentials are incorrect.'
+    )
+    @Response<string>(
+        500,
+        'System error',
+        'Sorry, something went wrong.'
+    )
     public async refreshAccessToken(
-        token: string
+        @Body() { refreshToken: token }: IRefreshToken
     ): Promise<IResponseToken> {
         try {
             const decoded = verifyToken(token, true);
@@ -89,7 +122,18 @@ class AuthService implements IAuthSerice {
         }
     }
 
-    public async requestPasswordResetUser(email: string): Promise<void> {
+    @Post('request-password-reset')
+    @Response<string>(
+        404,
+        'Not found error',
+        'Sorry, the user does not exist.'
+    )
+    @Response<string>(
+        500,
+        'System error',
+        'Sorry, something went wrong.'
+    )
+    public async requestPasswordResetUser(@Body() { email }: { email: string }): Promise<void> {
         try {
             const user = await this.userRepository.findByEmail(email);
 
@@ -113,7 +157,18 @@ class AuthService implements IAuthSerice {
         }
     }
 
-    public async resetPassword(token: string, password: string): Promise<void> {
+    @Post('update-password')
+    @Response<string>(
+        400,
+        'Bad request error',
+        'Sorry, the request is invalid.'
+    )
+    @Response<string>(
+        500,
+        'System error',
+        'Sorry, something went wrong.'
+    )
+    public async resetPassword(@Body() { token, password }: IUpdatePassword): Promise<void> {
         try {
             const tokenData = await this.passwordResetProv.findByToken(token);
 

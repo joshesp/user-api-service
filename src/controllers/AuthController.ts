@@ -41,8 +41,7 @@ class AuthController implements IAuthController {
         next: NextFunction
     ): Promise<void> {
         try {
-            const { refreshToken } = req.body;
-            const token = await AuthService.refreshAccessToken(refreshToken);
+            const token = await AuthService.refreshAccessToken(req.body);
             res.status(200).json(token);
         } catch (error) {
             next(error);
@@ -55,8 +54,7 @@ class AuthController implements IAuthController {
         next: NextFunction
     ): Promise<void> {
         try {
-            const { email } = req.body;
-            await AuthService.requestPasswordResetUser(email);
+            await AuthService.requestPasswordResetUser(req.body);
             res.status(200).json({ message: 'Password reset successfully' });
         } catch (error) {
             next(error);
@@ -69,8 +67,7 @@ class AuthController implements IAuthController {
         next: NextFunction
     ): Promise<void> {
         try {
-            const { password, token } = req.body;
-            await AuthService.resetPassword(token, password);
+            await AuthService.resetPassword(req.body);
             res.status(200).json({ message: 'Password reset successfully' });
         } catch (error) {
             next(error);

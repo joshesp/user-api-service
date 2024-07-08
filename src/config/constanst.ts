@@ -1,5 +1,5 @@
 
-const CONTEXT_API = 'v1';
+const CONTEXT_API = '';
 
 const ID_MESSAGES_ERROR = {
     USER_NOT_FOUND: 'USER_NOT_FOUND',

@@ -30,7 +30,7 @@ router.post(
 );
 
 router.post(
-    '/reset-password',
+    '/request-password-reset',
     [...userRquestPasswordResetFieldsRequired, authValidatorFieldsMiddleware],
     AuthController.requestPasswordReset
 );
