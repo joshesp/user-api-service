@@ -1,11 +1,11 @@
 import { User } from "../../../entity/User";
-import { IUserAuthData } from "../payloads/IUserAuthData";
+import { IAuthToken, IRefreshToken, IUpdatePassword, IUserAuth } from "../payloads/IUserAuthData";
 
 
 export interface IAuthSerice {
     autheticateById(userId: number): Promise<User>;
-    authenticate({ email, password }: IUserAuthData): Promise<{ token: string, refreshToken: string }>;
-    refreshAccessToken(token: string): Promise<{ token: string, refreshToken: string }>;
-    requestPasswordResetUser(email: string): Promise<void>;
-    resetPassword(token: string, password: string): Promise<void>
+    authenticate({ email, password }: IUserAuth): Promise<IAuthToken>;
+    refreshAccessToken(refreshToken: IRefreshToken): Promise<{ token: string, refreshToken: string }>;
+    requestPasswordResetUser(email: { email: string }): Promise<void>;
+    resetPassword(updatePassword: IUpdatePassword): Promise<void>;
 }
