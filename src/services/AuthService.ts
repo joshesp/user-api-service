@@ -1,6 +1,6 @@
 
 import { Body, Controller, Post, Response, Route, Tags } from "tsoa";
-import { ID_MESSAGES_ERROR } from "../config/constanst";
+import { LABEL_MESSAGES_ERROR } from "../config/constanst";
 import AppError from "../core/errors/AppError";
 import { IAuthSerice } from "../core/interfaces/auth/IAuthService";
 import { IAuthToken, IRefreshToken, IUpdatePassword, IUserAuth } from "../core/interfaces/payloads/IUserAuthData";
@@ -66,13 +66,13 @@ class AuthService extends Controller implements IAuthSerice {
             );
 
             if (requestPasswordReset) {
-                throw new AppError(ID_MESSAGES_ERROR.RESET_PASSWORD_REQ, 403);
+                throw new AppError(LABEL_MESSAGES_ERROR.RESET_PASSWORD_REQ, 403);
             }
 
             const isValidPassword = await user!.validatePassword(password);
 
             if (!isValidPassword) {
-                throw new AppError(ID_MESSAGES_ERROR.INVALID_PASSWORD, 403);
+                throw new AppError(LABEL_MESSAGES_ERROR.INVALID_PASSWORD, 403);
             }
 
             const token = generateToken(user!.id);
@@ -136,7 +136,7 @@ class AuthService extends Controller implements IAuthSerice {
 
             return { token: newToken, refreshToken };
         } catch (error) {
-            throw new AppError(ID_MESSAGES_ERROR.TOKEN_NOT_FOUND, 401);
+            throw new AppError(LABEL_MESSAGES_ERROR.TOKEN_NOT_FOUND, 401);
         }
     }
 
@@ -197,7 +197,7 @@ class AuthService extends Controller implements IAuthSerice {
             const tokenData = await this.passwordResetProv.findByToken(token);
 
             if (!tokenData) {
-                throw new AppError(ID_MESSAGES_ERROR.TOKEN_NOT_FOUND, 401);
+                throw new AppError(LABEL_MESSAGES_ERROR.TOKEN_NOT_FOUND, 401);
             }
 
             const timeDifferenceInMinutes = Math.round(
@@ -205,13 +205,13 @@ class AuthService extends Controller implements IAuthSerice {
             );
 
             if (timeDifferenceInMinutes > 20) {
-                throw new AppError(ID_MESSAGES_ERROR.TOKEN_EXPIRED, 401);
+                throw new AppError(LABEL_MESSAGES_ERROR.TOKEN_EXPIRED, 401);
             }
 
             const user = await this.userRepository.findById(tokenData.userId);
 
             if (!user) {
-                throw new AppError(ID_MESSAGES_ERROR.USER_NOT_FOUND, 401);
+                throw new AppError(LABEL_MESSAGES_ERROR.USER_NOT_FOUND, 401);
             }
 
             user.password = password;
@@ -228,11 +228,11 @@ class AuthService extends Controller implements IAuthSerice {
      */
     private verifyUserStatus(user: User | null): void {
         if (!user) {
-            throw new AppError(ID_MESSAGES_ERROR.USER_NOT_FOUND, 401);
+            throw new AppError(LABEL_MESSAGES_ERROR.USER_NOT_FOUND, 401);
         }
 
         if (user.isAccountBlocked) {
-            throw new AppError(ID_MESSAGES_ERROR.USER_BLOCKED, 401);
+            throw new AppError(LABEL_MESSAGES_ERROR.USER_BLOCKED, 401);
         }
     }
 }
