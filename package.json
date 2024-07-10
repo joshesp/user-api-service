@@ -1,7 +1,7 @@
 {
-  "name": "ndj-user-service",
-  "version": "1.0.2",
-  "description": "Microservicio para el gestion relacionada a los usuarios",
+  "name": "ndj-auth-service",
+  "version": "1.0.3",
+  "description": "Microservicio para el gestion relacionada a la autenticación de usuarios",
   "main": "dist/app.js",
   "scripts": {
     "start": "node dist/app.js",
@@ -20,7 +20,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://josue_dev@bitbucket.org/josue_dev/backend-app-vocabulary.git"
+    "url": "https://github.com/joshesp/user-api-service"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
