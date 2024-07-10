@@ -1,5 +1,5 @@
-import { IUserData } from "../payloads/IUserData";
+import { IUser } from "../payloads/IUserData";
 
 export interface IUserService {
-    create(user: IUserData): Promise<number>
+    create(user: IUser): Promise<number>
 }
