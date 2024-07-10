@@ -3,8 +3,8 @@ import { Body, Post, Response, Route, Tags } from "tsoa";
 import { ID_MESSAGES_ERROR } from "../config/constanst";
 import AppError from "../core/errors/AppError";
 import { IAuthSerice } from "../core/interfaces/auth/IAuthService";
-import { IRefreshToken, IResponseToken, IUpdatePassword, IUserAuthData } from "../core/interfaces/payloads/IUserAuthData";
-import { IUserCreateData } from "../core/interfaces/payloads/IUserData";
+import { IAuthToken, IRefreshToken, IUpdatePassword, IUserAuth } from "../core/interfaces/payloads/IUserAuthData";
+import { IUserCreate } from "../core/interfaces/payloads/IUserData";
 import { User } from "../entity/User";
 import PasswordResetRepository from "../repositories/PasswordResetRepository";
 import UserRepository from "../repositories/UserRepository";
@@ -46,8 +46,8 @@ class AuthService implements IAuthSerice {
         'Sorry, something went wrong.'
     )
     public async authenticate(
-        @Body() { email, password }: IUserAuthData
-    ): Promise<IResponseToken> {
+        @Body() { email, password }: IUserAuth
+    ): Promise<IAuthToken> {
         try {
             const user = await this.userRepository.findByEmail(email);
 
@@ -87,7 +87,7 @@ class AuthService implements IAuthSerice {
         'System error',
         'Sorry, something went wrong.'
     )
-    public async register(@Body() user: IUserCreateData): Promise<number> {
+    public async register(@Body() user: IUserCreate): Promise<number> {
         try {
             const newUser = await this.userRepository.createUser(user);
 
@@ -110,7 +110,7 @@ class AuthService implements IAuthSerice {
     )
     public async refreshAccessToken(
         @Body() { refreshToken: token }: IRefreshToken
-    ): Promise<IResponseToken> {
+    ): Promise<IAuthToken> {
         try {
             const decoded = verifyToken(token, true);
             const newToken = generateToken(decoded);
