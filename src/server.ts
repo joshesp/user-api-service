@@ -1,8 +1,8 @@
 import cors from 'cors';
 import express, { Application } from 'express';
-import swaggerUi from 'swagger-ui-express';
+import morgan from "morgan";
+import swaggerUi from "swagger-ui-express";
 import { CONTEXT_API } from './config/constanst';
-import swaggerSpec from './config/swaggerConfig';
 import errorMiddleware from './middlewares/errorMiddleware';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
@@ -23,17 +23,20 @@ class Server {
         this.app.use(cors());
         this.app.use(express.json());
 
+        this.app.use(morgan("tiny"));
+        this.app.use(express.static("public"));
+
         this.app.use(`${CONTEXT_API}/users`, userRoutes);
         this.app.use(`${CONTEXT_API}/auth`, authRoutes);
         this.app.use(
-            `/docs`,
+            "/docs",
             swaggerUi.serve,
-            swaggerUi.setup(swaggerSpec)
+            swaggerUi.setup(undefined, {
+                swaggerOptions: {
+                    url: "/swagger.json",
+                },
+            })
         );
-        this.app.get(`/docs.json`, (_, res) => {
-            res.setHeader('Content-Type', 'application/json')
-            res.send(swaggerSpec)
-        });
         this.app.use(errorMiddleware);
     }
 

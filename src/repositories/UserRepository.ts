@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../config/connectionDatabase";
-import { IUserData } from "../core/interfaces/payloads/IUserData";
+import { IUserCreate } from "../core/interfaces/payloads/IUserData";
 import { IUserRopository } from "../core/interfaces/user/IUserRopository";
 import { User } from "../entity/User";
 
@@ -19,7 +19,7 @@ class UserRepository implements IUserRopository {
         return this.repository.findOneBy({ email: email });
     }
 
-    public createUser(user: IUserData): Promise<User> {
+    public createUser(user: IUserCreate): Promise<User> {
         const newUser = new User();
 
         newUser.name = user.name;

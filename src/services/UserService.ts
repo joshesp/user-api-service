@@ -1,5 +1,5 @@
 
-import { IUserData } from "../core/interfaces/payloads/IUserData";
+import { IUserCreate } from "../core/interfaces/payloads/IUserData";
 import { IUserService } from "../core/interfaces/user/IUserService";
 import UserRepository from "../repositories/UserRepository";
 
@@ -10,7 +10,7 @@ class UserService implements IUserService {
         this.userRepository = new UserRepository();
     }
 
-    public async create(user: IUserData): Promise<number> {
+    public async create(user: IUserCreate): Promise<number> {
         try {
             const newUser = await this.userRepository.createUser(user);
 
