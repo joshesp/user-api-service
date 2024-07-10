@@ -1,5 +1,5 @@
 
-import { Body, Post, Response, Route, Tags } from "tsoa";
+import { Body, Controller, Post, Response, Route, Tags } from "tsoa";
 import { ID_MESSAGES_ERROR } from "../config/constanst";
 import AppError from "../core/errors/AppError";
 import { IAuthSerice } from "../core/interfaces/auth/IAuthService";
@@ -11,13 +11,18 @@ import UserRepository from "../repositories/UserRepository";
 import { generateRandomToken } from "../utils/cryptoUtils";
 import { generateToken, verifyToken } from "../utils/jwt";
 
+/**
+ * Manejo de la autenticación y registro de usuarios
+ */
 @Route("auth")
 @Tags("Autenticación")
-class AuthService implements IAuthSerice {
+class AuthService extends Controller implements IAuthSerice {
     private userRepository: UserRepository;
     private passwordResetProv: PasswordResetRepository;
 
     constructor() {
+        super();
+
         this.userRepository = new UserRepository();
         this.passwordResetProv = new PasswordResetRepository();
     }
@@ -34,6 +39,9 @@ class AuthService implements IAuthSerice {
         }
     }
 
+    /**
+     * Validación de credenciales para el acceso del usuario
+     */
     @Post('login')
     @Response<string>(
         403,
@@ -76,6 +84,9 @@ class AuthService implements IAuthSerice {
         }
     };
 
+    /**
+     * Creación de un usuario
+     */
     @Post('register')
     @Response<string>(
         400,
@@ -97,6 +108,9 @@ class AuthService implements IAuthSerice {
         }
     };
 
+    /**
+     * Actualización del token de acceso
+     */
     @Post('refresh-token')
     @Response<string>(
         403,
@@ -122,6 +136,9 @@ class AuthService implements IAuthSerice {
         }
     }
 
+    /**
+     * Solicitud de restablecimiento de contraseña
+     */
     @Post('request-password-reset')
     @Response<string>(
         404,
@@ -157,6 +174,9 @@ class AuthService implements IAuthSerice {
         }
     }
 
+    /**
+     * Actualización de la contraseña
+     */
     @Post('update-password')
     @Response<string>(
         400,
