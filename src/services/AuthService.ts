@@ -89,6 +89,10 @@ class AuthService extends Controller implements IAuthSerice {
      */
     @Post('register')
     @Response<string>(
+        201,
+        'No content',
+    )
+    @Response<string>(
         400,
         'Bad request error',
         'Sorry, the request is invalid.'
@@ -123,7 +127,7 @@ class AuthService extends Controller implements IAuthSerice {
         'Sorry, something went wrong.'
     )
     public async refreshAccessToken(
-        @Body() { refreshToken: token }: IRefreshToken
+        @Body() { token }: IRefreshToken
     ): Promise<IAuthToken> {
         try {
             const decoded = verifyToken(token, true);

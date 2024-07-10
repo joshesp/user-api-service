@@ -43,14 +43,14 @@ export interface IAuthToken {
  * @tsoaModel
  * @example
  * {
- *   "refreshToken": "eias921as..."
+ *   "token": "eias921as..."
  * }
  */
 export interface IRefreshToken {
     /**
      * Token de refresco del usuario
      */
-    refreshToken: string
+    token: string
 }
 
 /**
@@ -59,6 +59,7 @@ export interface IRefreshToken {
  * @example
  * {
  *   "password": "@twsY76w",
+ *   "passwordConfirmation": "@twsY76w",
  *   "token": "eias921as..."
  * }
  */
@@ -67,6 +68,10 @@ export interface IUpdatePassword {
      * Contraseña del usuario
      */
     password: string,
+    /**
+     * Confirmación de la contraseña
+     */
+    passwordConfirmation: string,
     /**
      * Token para la actualización de la contraseña
      */

@@ -28,7 +28,7 @@ class AuthController implements IAuthController {
         try {
             const userId = await UserService.create(req.body);
             Logger.info(`User created successfully: ${userId}`);
-            res.status(201).json({ message: 'User created successfully' });
+            res.status(201).json(null);
         } catch (error) {
             Logger.error(`Error created user: ${error}`);
             next(error);
@@ -41,6 +41,7 @@ class AuthController implements IAuthController {
         next: NextFunction
     ): Promise<void> {
         try {
+            console.log(req.body);
             const token = await AuthService.refreshAccessToken(req.body);
             res.status(200).json(token);
         } catch (error) {
