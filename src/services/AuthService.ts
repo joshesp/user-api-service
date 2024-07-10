@@ -40,7 +40,7 @@ class AuthService extends Controller implements IAuthSerice {
     }
 
     /**
-     * Validación de credenciales para el acceso del usuario
+     * Validación de credenciales para el acceso de un usuario
      */
     @Post('login')
     @Response<string>(

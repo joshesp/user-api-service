@@ -11,9 +11,9 @@ export interface IUserBase {
  * {
  *   "name": "Jonh",
  *   "lastname": "Doe",
- *   "email": "jonh@mail.com",
- *   "password": "password0@",
- *   "passwordConfirmation": "password0@"
+ *   "email": "johndoe@mail.com",
+ *   "password": "johnDoe20!@",
+ *   "passwordConfirmation": "johnDoe20!@"
  * }
  */
 export interface IUserCreate extends IUserBase {

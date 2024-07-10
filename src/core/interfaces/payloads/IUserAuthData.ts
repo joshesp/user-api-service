@@ -3,8 +3,8 @@
  * @tsoaModel
  * @example
  * {
- *   "email": "jonh@mail.com",
- *   "password": "password0@"
+ *   "email": "johndoe@mail.com",
+ *   "password": "johnDoe20!@"
  * }
  */
 export interface IUserAuth {
