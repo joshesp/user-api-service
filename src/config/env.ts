@@ -1,0 +1,21 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const PORT = process.env.PORT || '8080';
+const IS_PRODUCTION = (process.env.NODE_ENV !== 'development');
+
+const APP_DATABASE_URL = process.env.APP_DATABASE_URL;
+const APP_DATABASE_TIMEOUT = process.env.APP_DATABASE_TIMEOUT ?? '10000';
+
+const APP_JWT_SECRET = process.env.APP_JWT_SECRET || 'X5xJ@CS_ycg14*';
+const APP_JWT_EXPIRES_IN = process.env.APP_JWT_EXPIRES_IN || '15m';
+const APP_JWT_REFRESH_SECRET = process.env.APP_JWT_REFRESH_SECRET || 'fePJWwOc-121QItIg';
+const APP_JWT_REFRESH_EXPIRES_IN = process.env.APP_JWT_REFRESH_EXPIRES_IN || '7d';
+
+const APP_ENCRYPTION_SECRET = process.env.APP_ENCRYPTION_SECRET || '';
+
+export {
+  APP_DATABASE_TIMEOUT, APP_DATABASE_URL, APP_ENCRYPTION_SECRET, APP_JWT_EXPIRES_IN, APP_JWT_REFRESH_EXPIRES_IN, APP_JWT_REFRESH_SECRET, APP_JWT_SECRET, IS_PRODUCTION, PORT
+};
+
