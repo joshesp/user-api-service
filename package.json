@@ -1,6 +1,6 @@
 {
   "name": "ndj-auth-service",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Microservicio para el gestion relacionada a la autenticación de usuarios",
   "main": "dist/app.js",
   "scripts": {
