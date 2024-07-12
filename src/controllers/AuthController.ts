@@ -41,7 +41,6 @@ class AuthController implements IAuthController {
         next: NextFunction
     ): Promise<void> {
         try {
-            console.log(req.body);
             const token = await AuthService.refreshAccessToken(req.body);
             res.status(200).json(token);
         } catch (error) {

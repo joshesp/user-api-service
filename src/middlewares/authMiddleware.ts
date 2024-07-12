@@ -15,8 +15,8 @@ const authMiddleware = async (
     const token = authHeader.split(' ')[1];
 
     try {
-        const userId = verifyToken(token);
-        const user = await AuthService.autheticateById(userId);
+        const credentials = verifyToken(token);
+        const user = await AuthService.autheticateByIdAndEmail(credentials);
 
         req.user = user;
 
