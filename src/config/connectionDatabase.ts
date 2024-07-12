@@ -11,7 +11,7 @@ import {
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  url: "postgres://" + APP_DATABASE_URL,
+  url: APP_DATABASE_URL,
   synchronize: false,
   logging: !IS_PRODUCTION,
   logger: IS_PRODUCTION ? undefined : 'debug',
