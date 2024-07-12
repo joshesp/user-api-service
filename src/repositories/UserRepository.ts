@@ -15,6 +15,14 @@ class UserRepository implements IUserRopository {
         return this.repository.findOneBy({ id });
     }
 
+    public findByEmailAndId({ email, id }: { email: string, id: number }): Promise<User | null> {
+        return this.repository.createQueryBuilder()
+            .where('user.id = :id', { id })
+            .andWhere('user.email = :email', { email })
+            .andWhere('user.account_blocked = :isBlocked', { isBlocked: false })
+            .getOne();
+    }
+
     public findByEmail(email: string): Promise<User | null> {
         return this.repository.findOneBy({ email: email });
     }

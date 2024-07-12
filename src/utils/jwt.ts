@@ -24,26 +24,34 @@ const jwtValuesEnv = (
  * Generación de un nuevo JWT token (authenticar/refrescar)
  */
 export const generateToken = (
-    userId: number, isRefreshToken = false
+    data: { id: number, email: string }, isRefreshToken = false
 ): string => {
     const { jwtSecret, jwtExpiresIn } = jwtValuesEnv(isRefreshToken);
+    const encryptedId = encrypt(`${data.id}`);
+    const encryptedEmail = encrypt(data.email);
+    const payload = { uuid: encryptedId, email: encryptedEmail };
 
-    const encryptedId = encrypt(`${userId}`);
-    const tokenPayload = { uuid: encryptedId };
-    return jwt.sign(tokenPayload, jwtSecret, { expiresIn: jwtExpiresIn });
+    return jwt.sign(
+        payload, jwtSecret, { expiresIn: jwtExpiresIn, algorithm: "HS256" }
+    );
 };
 
 /**
  * Verificación y decodificación de JWT token
  */
-export const verifyToken = (token: string, isRefreshToken = false): number => {
+export const verifyToken = (
+    token: string, isRefreshToken = false
+): { id: number, email: string } => {
     const { jwtSecret } = jwtValuesEnv(isRefreshToken);
 
     try {
-        const decoded = jwt.verify(token, jwtSecret) as { [key: string]: any };
+        const decoded = jwt.verify(
+            token, jwtSecret, { algorithms: ["HS256"] }
+        ) as { [key: string]: any };
         const decryptedId = decrypt(decoded.uuid);
+        const decryptedEmail = decrypt(decoded.email);
 
-        return +decryptedId;
+        return { id: +decryptedId, email: decryptedEmail };
     } catch (error) {
         throw new Error('Invalid token');
     }

@@ -4,6 +4,7 @@ import { IUserCreate } from "../payloads/IUserData";
 export interface IUserRopository {
     findById(id: number): Promise<User | null>;
     findByEmail(email: string): Promise<User | null>;
+    findByEmailAndId({ email, id }: { email: string, id: number }): Promise<User | null>;
     createUser(user: IUserCreate): Promise<User>;
     updateUser(user: User): Promise<User>;
 }

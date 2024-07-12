@@ -3,7 +3,7 @@ import { IAuthToken, IRefreshToken, IUpdatePassword, IUserAuth } from "../payloa
 
 
 export interface IAuthSerice {
-    autheticateById(userId: number): Promise<User>;
+    autheticateByIdAndEmail({ email, id }: { email: string, id: number }): Promise<User>;
     authenticate({ email, password }: IUserAuth): Promise<IAuthToken>;
     refreshAccessToken(refreshToken: IRefreshToken): Promise<{ token: string, refreshToken: string }>;
     requestPasswordResetUser(email: { email: string }): Promise<void>;

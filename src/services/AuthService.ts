@@ -27,9 +27,11 @@ class AuthService extends Controller implements IAuthSerice {
         this.passwordResetProv = new PasswordResetRepository();
     }
 
-    public async autheticateById(userId: number): Promise<User> {
+    public async autheticateByIdAndEmail(
+        credentials: { email: string, id: number }
+    ): Promise<User> {
         try {
-            const user = await this.userRepository.findById(userId);
+            const user = await this.userRepository.findByEmailAndId(credentials);
 
             this.verifyUserStatus(user);
 
@@ -75,8 +77,10 @@ class AuthService extends Controller implements IAuthSerice {
                 throw new AppError(LABEL_MESSAGES_ERROR.INVALID_PASSWORD, 403);
             }
 
-            const token = generateToken(user!.id);
-            const refreshToken = generateToken(user!.id, true);
+            const token = generateToken({ id: user!.id, email: user!.email });
+            const refreshToken = generateToken(
+                { id: user!.id, email: user!.email }, true
+            );
 
             return { token, refreshToken };
         } catch (error) {
